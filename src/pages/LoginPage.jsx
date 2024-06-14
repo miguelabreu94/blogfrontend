@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { Button } from "reactstrap"; // Import Button from reactstrap
+import "../css/LoginPage.css";
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -34,11 +35,13 @@ export const LoginPage = () => {
       });
 
       const responseData = await response.json();
+      console.log(responseData)
 
       if (responseData.statusCode === 200) {
         // Login successful
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("role", responseData.role);
+        localStorage.setItem("user",JSON.stringify(responseData.user))
         console.log(responseData.token);
         console.log(responseData.role);
         alert(responseData.message);
@@ -57,7 +60,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -81,15 +84,15 @@ export const LoginPage = () => {
         </label>
         <br />
         <div>
-          <Button color="primary" outline type="submit">
+          <Button outline type="submit">
             {" "}
             Login{" "}
           </Button>
         </div>
       </form>
-      <p>
+      <p className="register-link">
         Don't have an account?{" "}
-        <Button active color="warning" size="">
+        <Button className="button-register">
           <Link to="/register">Register here</Link>
         </Button>
       </p>

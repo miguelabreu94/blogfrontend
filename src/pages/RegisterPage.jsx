@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap"; // Import Button from reactstrap
+import "../css/RegisterPage.css"
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -66,8 +67,8 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="register-container">
+      <h2>Register User</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
@@ -114,14 +115,20 @@ export const RegisterPage = () => {
         </label>
         <br />
         <div>
-          <Button color="primary" outline type="submit">
+          <Button >
             {" "}
             Register{" "}
           </Button>
         </div>
       </form>
       <p>
-        Already have an account? <Link to="/login">Login here</Link>
+        Already have an account? <Link style={{
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: '25px',
+      cursor: 'pointer',
+      padding: '5px 10px',
+    }}to="/login">Login here</Link>
       </p>
     </div>
   );

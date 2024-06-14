@@ -1,0 +1,33 @@
+.login-container{
+    background-color: rgb(34, 34, 31);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+
+.login-container form{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="number"], input[type="text"], input, select{
+    font-size: 24px;
+    background-color: white;
+    border: 1px solid rgb(6, 97, 111);
+    border-radius: 10px;
+    text-align: center;
+}
+
+p{
+    color: rgb(211, 211, 211);
+}
+
+.button-register a {
+    color: white;
+    text-decoration: none;
+}

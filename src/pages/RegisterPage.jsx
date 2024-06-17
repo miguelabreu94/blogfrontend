@@ -115,20 +115,15 @@ export const RegisterPage = () => {
         </label>
         <br />
         <div>
-          <Button >
+          <Button className="button-regis">
             {" "}
             Register{" "}
           </Button>
         </div>
       </form>
-      <p>
-        Already have an account? <Link style={{
-      color: 'white',
-      fontWeight: 'bold',
-      fontSize: '25px',
-      cursor: 'pointer',
-      padding: '5px 10px',
-    }}to="/login">Login here</Link>
+      <p className="login-text">
+        Already have an account? 
+        <Link className="login-here" to="/login">Login here</Link>
       </p>
     </div>
   );

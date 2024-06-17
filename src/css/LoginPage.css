@@ -15,8 +15,9 @@
     gap: 10px;
 }
 
-input[type="number"], input[type="text"], input, select{
+input[type="number"], input[type="text"], input[type="password"], select{
     font-size: 24px;
+    margin-left: 10px;
     background-color: white;
     border: 1px solid rgb(6, 97, 111);
     border-radius: 10px;
@@ -27,7 +28,24 @@ p{
     color: rgb(211, 211, 211);
 }
 
+.button-register{
+    margin-left: 10px;
+}
+
 .button-register a {
     color: white;
     text-decoration: none;
 }
+
+.login-button{
+    margin-bottom: 20px;
+}
+
+.register-text{
+    font-size: 17px;
+}
+
+
+
+
+

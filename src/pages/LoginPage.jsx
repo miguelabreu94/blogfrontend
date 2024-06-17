@@ -41,7 +41,7 @@ export const LoginPage = () => {
         // Login successful
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("role", responseData.role);
-        localStorage.setItem("user",JSON.stringify(responseData.user))
+        localStorage.setItem("user",JSON.stringify(responseData.user));
         console.log(responseData.token);
         console.log(responseData.role);
         alert(responseData.message);
@@ -61,7 +61,7 @@ export const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2 className="login-title">Login</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
@@ -84,13 +84,13 @@ export const LoginPage = () => {
         </label>
         <br />
         <div>
-          <Button outline type="submit">
+          <Button className="login-button" outline type="submit">
             {" "}
             Login{" "}
           </Button>
         </div>
       </form>
-      <p className="register-link">
+      <p className="register-text">
         Don't have an account?{" "}
         <Button className="button-register">
           <Link to="/register">Register here</Link>

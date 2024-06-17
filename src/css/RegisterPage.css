@@ -14,3 +14,15 @@
     align-items: center;
     gap: 10px;
 }
+
+.button-regis{
+    margin-bottom: 20px;
+}
+
+.login-text{
+    font-size: 17px;
+}
+
+.login-here{
+    margin-left: 15px;
+}

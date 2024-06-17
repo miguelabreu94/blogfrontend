@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import "../css/PostCard.css"
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, onDeletePost }) => {
 
     const [showComments, setShowComments] = useState(false);
     const [newComment, setNewComment] = useState("");
@@ -9,6 +10,7 @@ const PostCard = ({ post }) => {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [userId, setUserId] = useState(null);
+    
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -29,7 +31,7 @@ const PostCard = ({ post }) => {
         setShowComments(!showComments);
     };
 
-    const sortedComments = comments.slice().sort((a, b) => new Date(b.dateOfCreation) - new Date(a.dateOfCreation));
+    const sortedComments = comments.slice().sort((a, b) => new Date(a.dateOfCreation) - new Date(b.dateOfCreation));
 
     const getTimeDifference = (commentDate) => {
         const currentDate = new Date();
@@ -88,6 +90,33 @@ const PostCard = ({ post }) => {
         }
     };
 
+    const handleDeletePost = async () => {
+        const token = localStorage.getItem("token");
+    
+        try {
+          await fetch(`http://localhost:8080/posts/${post.id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          onDeletePost(post.id)
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
+      const formattedDate = new Date(post.dateOfCreation).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZoneName: "short",
+      });
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -98,39 +127,52 @@ const PostCard = ({ post }) => {
                 <h2>{post.title}</h2>
             </section>
             <img className="lp-img" src={post.imageName} alt={post.title} />
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            <p>Created by: ({post.user.pessoa.fullName}) {post.user.username}</p>
+            <div className="lp-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <p className="lp-created-by" >Criado por: ({post.user.pessoa.fullName}) {post.user.username}</p>
+            <p style={{ color: "black", fontSize: "14px" }}>Data de criação: {formattedDate}</p>
             <section className="lp-section-bottom">
                 <div className="lp-comments-wrapper">
                     <button className="lp-comments" onClick={toggleComments}>
                         <span>{comments.length}</span> Comentários
                     </button>
+                    {isAdmin && (
+                        <button className="lp-delete-post-btn" onClick={handleDeletePost}>Apagar Post</button>
+                    )}
                     {showComments && (
                         <>
                             {user && (
-                                <div>
+                                <div className="lp-add-comment">
                                     <input
                                         type="text"
                                         value={newComment}
                                         onChange={(e) => setNewComment(e.target.value)}
                                         placeholder="Add a comment"
                                     />
-                                    <button onClick={handleAddComment} disabled={!user}>Add</button>
+                                    <button className="lp-add-comment-btn" onClick={handleAddComment} disabled={!user}>Add</button>
                                 </div>
                             )}
                             <ul className="lp-comment-list">
                                 {sortedComments.map((comment) => (
-                                    <li key={comment.id}>
+                                    <li key={comment.id} className="lp-comment-item">
                                         <strong>{comment.user.pessoa.fullName} ({comment.user.username})</strong>: {comment.content}
                                         <br />
-                                        <span>Created: {getTimeDifference(comment.dateOfCreation)}</span>
-                                        {isAdmin || comment.user.id === userId && <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>}
+                                        <span className="lp-comment-created">Created: {getTimeDifference(comment.dateOfCreation)}</span>
+                                        {(isAdmin || comment.user.id === userId) && (
+                                            <button className="lp-delete-comment-btn" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
                         </>
                     )}
-                    <p className="lp-category">Categoria: {post.category.categoryTitle}</p>
+                    <div className="lp-categories">
+                        <p className="lp-categories-label">Categorias:</p>
+                        <ul className="lp-category-list">
+                            {post.categories.map((category) => (
+                                <li key={category} className="lp-category-item">{category}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </section>
         </article>

@@ -54,6 +54,8 @@ main {
 .lp-category {
     padding-top: 2rem;
     text-align: right; /* Right align the category name */
+    color: black;
+    font-size: 14px;
 }
 
 .lp-div {

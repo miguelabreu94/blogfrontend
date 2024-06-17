@@ -6,12 +6,18 @@ import AddPost from "../components/AddPost";
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+
 
   useEffect(() => {
     const fetchUserFromLocalStorage = () => {
       const storedUser = localStorage.getItem("user");
+      const storedRole = localStorage.getItem("role");
+
       if (storedUser) {
-        setUser(JSON.parse(storedUser)); // Parse JSON string to object
+        const userObject = JSON.parse(storedUser); // Parse JSON string to object
+        setUser(userObject);
+        setIsAdmin(storedRole === "ADMIN"); // Set isAdmin based on the role
       }
     };
 
@@ -47,11 +53,28 @@ const Dashboard = () => {
     setPosts([newPost, ...posts]);
   };
 
+  const handleDeletePost = async (postId) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      await fetch(`http://localhost:8080/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setPosts(posts.filter(post => post.id !== postId));
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <main>
-      {user && <AddPost onPostAdded={handlePostAdded} user={user} />}
+      {isAdmin && <AddPost onPostAdded={handlePostAdded} user={user} />}
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} post={post} onDeletePost={handleDeletePost} />
       ))}
     </main>
   );

@@ -102,13 +102,21 @@ const AddPost = ({ onPostAdded, user }) => {
             </div>
             <div className="my-3">
               <Label for="content">Conteúdo</Label>
-              <JoditEditor
+              <Input
+                type="textarea"
+                ref={editor}
+                id="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Escreva aqui"
+            />
+              {/* <JoditEditor
                 ref={editor}
                 value={content}
                 className="jodit-editor rounded-0"
                 style={{ height: "300px", color: "black " }} // Set text color to black
                 onChange={(newContent) => setContent(newContent)}
-              />
+              /> */}
             </div>
             <div className="my-3 category-container">
               <Label for="category">Post categories</Label>

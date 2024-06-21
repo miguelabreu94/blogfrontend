@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../css/Dashboard.css";
 import PostCard from "../components/PostCard";
 import AddPost from "../components/AddPost";
+import EditPost from "../components/EditPost";
+
 
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [postToEdit, setPostToEdit] = useState(null); // State to keep track of the post being edited
 
   useEffect(() => {
     const fetchUserFromLocalStorage = () => {
@@ -26,7 +28,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user)
       fetchPosts();
     }
   }, [user]);
@@ -70,11 +71,32 @@ const Dashboard = () => {
     }
   };
 
+  const handleEditPost = (post) => {
+    setPostToEdit(post); // Set the post to be edited
+  };
+
+  const handlePostUpdated = (updatedPost) => {
+    setPosts(posts.map((post) => (post.id === updatedPost.id ? updatedPost : post)));
+    setPostToEdit(null); // Clear the post being edited
+  };
+
+  const handleCancelEdit = () => {
+    setPostToEdit(null); // Clear the post being edited
+  };
+
   return (
     <main>
       {isAdmin && <AddPost onPostAdded={handlePostAdded} user={user} />}
+      {postToEdit && (
+        <EditPost post={postToEdit} onPostUpdated={handlePostUpdated} onCancelEdit={handleCancelEdit}/>
+      )}
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} onDeletePost={handleDeletePost} />
+        <PostCard
+          key={post.id}
+          post={post}
+          onDeletePost={handleDeletePost}
+          onEditPost={handleEditPost}
+        />
       ))}
     </main>
   );

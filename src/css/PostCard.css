@@ -121,5 +121,15 @@
     margin-right: 5px;
     margin-bottom: 5px;
   }
+
+  .lp-edit-post-btn {
+    background-color: coral; /* Blue background color */
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Rounded corners */
+  }
   
   

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../css/PostCard.css"
+import EditPost from "./EditPost";
 
-const PostCard = ({ post, onDeletePost }) => {
+const PostCard = ({ post, onDeletePost, onEditPost }) => {
 
     const [showComments, setShowComments] = useState(false);
     const [newComment, setNewComment] = useState("");
@@ -10,6 +11,7 @@ const PostCard = ({ post, onDeletePost }) => {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [userId, setUserId] = useState(null);
+    const [editing, setEditing] = useState(false); // State to handle editing mode
     
 
     useEffect(() => {
@@ -107,6 +109,17 @@ const PostCard = ({ post, onDeletePost }) => {
         }
       };
 
+      const handlePostUpdated = (updatedPost) => {
+        setEditing(false);
+        post.title = updatedPost.title;
+        post.content = updatedPost.content;
+        post.dateOfLastModification = updatedPost.dateOfLastModification; // Update the last modification date
+        setComments(updatedPost.comments || post.comments);
+
+        
+        window.location.reload(); // Reload the page to reflect the changes
+      };
+
       const formattedDate = new Date(post.dateOfCreation).toLocaleDateString(undefined, {
         year: "numeric",
         month: "short",
@@ -117,12 +130,29 @@ const PostCard = ({ post, onDeletePost }) => {
         timeZoneName: "short",
       });
 
+      const formattedLastModifiedDate = post.dateOfLastModification
+    ? new Date(post.dateOfLastModification).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZoneName: "short",
+      })
+    : null;
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
         <article className="lp-article" key={post.id}>
+            {editing ? (
+                <EditPost post = {post} onPostUpdated={handlePostUpdated}/>
+            
+            ):(
+                <>
             <section className="lp-section-header">
                 <h2>{post.title}</h2>
             </section>
@@ -130,6 +160,9 @@ const PostCard = ({ post, onDeletePost }) => {
             <div className="lp-content" dangerouslySetInnerHTML={{ __html: post.content }} />
             <p className="lp-created-by" >Criado por: ({post.user.pessoa.fullName}) {post.user.username}</p>
             <p style={{ color: "black", fontSize: "14px" }}>Data de criação: {formattedDate}</p>
+            {formattedLastModifiedDate && (
+            <p style={{ color: "black", fontSize: "14px" }}>Última modificação: {formattedLastModifiedDate}</p>
+          )}
             <section className="lp-section-bottom">
                 <div className="lp-comments-wrapper">
                     <button className="lp-comments" onClick={toggleComments}>
@@ -137,6 +170,9 @@ const PostCard = ({ post, onDeletePost }) => {
                     </button>
                     {isAdmin && (
                         <button className="lp-delete-post-btn" onClick={handleDeletePost}>Apagar Post</button>
+                    )}
+                    {isAdmin && (
+                        <button className="lp-edit-post-btn" onClick={() => setEditing(true)}>Edit</button>
                     )}
                     {showComments && (
                         <>
@@ -175,6 +211,8 @@ const PostCard = ({ post, onDeletePost }) => {
                     </div>
                 </div>
             </section>
+            </>
+            )}
         </article>
     );
 };

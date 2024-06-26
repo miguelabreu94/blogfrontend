@@ -10,6 +10,7 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isMod, setIsMod] = useState(false); // State to handle moderator role
     const [userId, setUserId] = useState(null);
     const [editing, setEditing] = useState(false); // State to handle editing mode
     
@@ -23,6 +24,7 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
             setIsAdmin(storedRole === "ADMIN");
+            setIsMod(storedRole === "MOD"); // Check if the user is a moderator
             setUserId(userObject.id); // Assuming userObject has an id field
           }
     
@@ -149,7 +151,7 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
     return (
         <article className="lp-article" key={post.id}>
             {editing ? (
-                <EditPost post = {post} onPostUpdated={handlePostUpdated}/>
+                <EditPost post = {post} onPostUpdated={handlePostUpdated} onCancelEdit={() => setEditing(false)}/>
             
             ):(
                 <>
@@ -159,9 +161,9 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
             <img className="lp-img" src={post.imageName} alt={post.title} />
             <div className="lp-content" dangerouslySetInnerHTML={{ __html: post.content }} />
             <p className="lp-created-by" >Criado por: ({post.user.pessoa.fullName}) {post.user.username}</p>
-            <p style={{ color: "black", fontSize: "14px" }}>Data de criação: {formattedDate}</p>
+            <p style={{ color: "black", fontSize: "12px" }}>Data de criação: {formattedDate}</p>
             {formattedLastModifiedDate && (
-            <p style={{ color: "black", fontSize: "14px" }}>Última modificação: {formattedLastModifiedDate}</p>
+            <p style={{ color: "black", fontSize: "12px" }}>Última modificação: {formattedLastModifiedDate}</p>
           )}
             <section className="lp-section-bottom">
                 <div className="lp-comments-wrapper">
@@ -193,7 +195,7 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
                                         <strong>{comment.user.pessoa.fullName} ({comment.user.username})</strong>: {comment.content}
                                         <br />
                                         <span className="lp-comment-created">Created: {getTimeDifference(comment.dateOfCreation)}</span>
-                                        {(isAdmin || comment.user.id === userId) && (
+                                        {(isAdmin || isMod || comment.user.id === userId) && (
                                             <button className="lp-delete-comment-btn" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
                                         )}
                                     </li>

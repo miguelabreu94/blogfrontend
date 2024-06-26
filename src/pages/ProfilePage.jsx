@@ -78,6 +78,33 @@ const ProfilePage = () => {
     }
   };
 
+  const handlePromoteToMod = async (username) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/admin/promotemod/${username}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        alert(`User ${username} promoted to moderator successfully`);
+        // Refresh the user list after promotion
+        fetchUsersWithUserRole();
+      } else {
+        const responseData = await response.json();
+        alert(responseData.message || "Failed to promote user to moderator");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while promoting user to moderator");
+    }
+  };
+
   const toggleUserList = () => {
     setShowUserList(!showUserList);
     if (!showUserList) {
@@ -105,24 +132,58 @@ const ProfilePage = () => {
         ) : (
           showUserList && (
             <div>
-              <h3 className="title-user-role">Users:</h3>
-              <ul>
-                {usersWithUserRole.map((user) => (
-                  <li className="user-list" key={user.id}>
-                    {user.username}
-                    {user.role === "USER" ? (
-                      <button
-                        className="button-promote-admin"
-                        onClick={() => handlePromoteToAdmin(user.username)}
-                      >
-                        Promote to Admin
-                      </button>
-                    ) : (
-                      <span> (Admin)</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              <table className="user-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Permissions</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {usersWithUserRole.map((user) => (
+                    <tr key={user.id} className="user-list">
+                      <td>{user.username}</td>
+                      <td>
+                        {user.role === "USER"
+                          ? "User"
+                          : user.role === "MOD"
+                          ? "Moderator"
+                          : "Admin"}
+                      </td>
+                      <td>
+                        {user.role === "USER" ? (
+                          <>
+                            <button
+                              className="button-promote-admin"
+                              onClick={() => handlePromoteToAdmin(user.username)}
+                            >
+                              Promote to Admin
+                            </button>
+                            <button
+                              className="button-promote-mod"
+                              onClick={() => handlePromoteToMod(user.username)}
+                            >
+                              Promote to Mod
+                            </button>
+                          </>
+                        ) : user.role === "MOD" ? (
+                          <>
+                            <button
+                              className="button-promote-admin"
+                              onClick={() => handlePromoteToAdmin(user.username)}
+                            >
+                              Promote to Admin
+                            </button>
+                          </>
+                        ) : (
+                          <span></span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )
         )}

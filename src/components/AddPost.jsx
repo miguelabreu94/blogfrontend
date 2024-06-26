@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardBody, Input, Form, Label, Button } from "reactstrap";
-import JoditEditor from "jodit-react";
-import "../css/AddPost.css"
+import "../css/AddPost.css";
+import { useNavigate } from "react-router-dom";
 
-const AddPost = ({ onPostAdded, user }) => {
+
+const AddPost = ({ user }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [imageName, setImageUrl] = useState("");
   const editor = useRef(null);
+  const navigate = useNavigate();
 
-  // fetch categories = OK!
+
+
   useEffect(() => {
     const fetchCategories = async () => {
       const token = localStorage.getItem("token");
@@ -42,7 +45,12 @@ const AddPost = ({ onPostAdded, user }) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    console.log('Adding post with userId:', user.id, 'and categories:', selectedCategories);
+    console.log(
+      "Adding post with userId:",
+      user.id,
+      "and categories:",
+      selectedCategories
+    );
 
     try {
       const response = await fetch(
@@ -53,11 +61,21 @@ const AddPost = ({ onPostAdded, user }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ title, content, imageName, categories: selectedCategories  }),
+          body: JSON.stringify({
+            title,
+            content,
+            imageName,
+            categories: selectedCategories,
+          }),
         }
       );
 
-      console.log("POST Body:", { title, content, imageName, categories: selectedCategories });
+      console.log("POST Body:", {
+        title,
+        content,
+        imageName,
+        categories: selectedCategories,
+      });
 
       if (!response.ok) {
         throw new Error("Failed to create post");
@@ -65,19 +83,25 @@ const AddPost = ({ onPostAdded, user }) => {
 
       const newPost = await response.json();
       console.log("New post created:", newPost);
-      onPostAdded(newPost);
       setTitle("");
       setContent("");
       setImageUrl("");
+
+      navigate('/dashboard'); // Adjust the route as needed
+
     } catch (error) {
       console.error("Error:", error);
     }
+
+    
   };
 
   const handleCheckboxChange = (e) => {
     const { value } = e.target;
     if (selectedCategories.includes(value)) {
-      setSelectedCategories(selectedCategories.filter((category) => category !== value));
+      setSelectedCategories(
+        selectedCategories.filter((category) => category !== value)
+      );
     } else {
       setSelectedCategories([...selectedCategories, value]);
     }
@@ -92,7 +116,7 @@ const AddPost = ({ onPostAdded, user }) => {
             <div className="my-3">
               <Label for="title">Titulo</Label>
               <Input
-                type="text"
+                type="textarea"
                 id="title"
                 placeholder="Escreva aqui"
                 className="rounded-0"
@@ -109,38 +133,34 @@ const AddPost = ({ onPostAdded, user }) => {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Escreva aqui"
-            />
-              {/* <JoditEditor
-                ref={editor}
-                value={content}
-                className="jodit-editor rounded-0"
-                style={{ height: "300px", color: "black " }} // Set text color to black
-                onChange={(newContent) => setContent(newContent)}
-              /> */}
+              />
             </div>
             <div className="my-3 category-container">
               <Label for="category">Post categories</Label>
-                {categories.map((category) => (
+              {categories.map((category) => (
                 <div className="category-item" key={category}>
-                <div className="category-checkbox">
-                  <input
-                    type="checkbox"
-                    id={`category-${category}`}
-                    value={category}
-                    checked={selectedCategories.includes(category)}
-                    onChange={handleCheckboxChange}
-        />
-      </div>
-      <label className="category-label" htmlFor={`category-${category}`}>
-        {category}
-      </label>
-    </div>
-  ))}
-</div>
+                  <div className="category-checkbox">
+                    <input
+                      type="checkbox"
+                      id={`category-${category}`}
+                      value={category}
+                      checked={selectedCategories.includes(category)}
+                      onChange={handleCheckboxChange}
+                    />
+                  </div>
+                  <label
+                    className="category-label"
+                    htmlFor={`category-${category}`}
+                  >
+                    {category}
+                  </label>
+                </div>
+              ))}
+            </div>
             <div className="my-3">
               <Label for="imageUrl">Imagem</Label>
               <Input
-                type="text"
+                type="textarea"
                 id="imageName"
                 placeholder="Introduza o URL da imagem"
                 className="rounded-0"

@@ -8,6 +8,7 @@ export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    confirmpassword:"",
     fullName: "",
     bio: "",
   });
@@ -26,6 +27,11 @@ export const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match. Please re-enter your password.');
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8080/auth/register", {
@@ -87,6 +93,16 @@ export const RegisterPage = () => {
             type="password"
             name="password"
             value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Confirm Password:
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleChange}
             required
           />

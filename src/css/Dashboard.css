@@ -1,80 +1,255 @@
-main {
-    
+.main {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.lp-article {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Category sections */
+  .category-section {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .category-title {
+    margin-top: 0;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+  
+  /* Post card styles */
+  .lp-article {
     box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
     border: 1px solid black;
     margin: 1rem;
-    margin-top: 7rem;
-    
-}
-
-.lp-section-header {
+    width: 100%; /* Ensure the post card takes full width */
+    max-width: 800px; /* Set a max-width for better readability */
+    padding: 1rem; /* Add padding inside the post card */
+  }
+  
+  .lp-section-header {
     display: flex;
     justify-content: space-around;
     align-items: center;
-}
-
-.lp-section-header > h2{
+  }
+  
+  .lp-section-header > h2 {
     display: flex;
     margin-right: 3rem;
-}
-
-.lp-profile {
+  }
+  
+  .lp-profile {
     border-radius: 50%;
     width: 4rem;
-}
-
-.lp-img {
+  }
+  
+  .lp-img {
     width: 100%;
-}
-
-.lp-comments {
+    height: auto;
+    border-radius: 0.5rem; /* Rounded corners for images */
+  }
+  
+  .lp-comments {
     gap: 0.3rem;
     border: none;
     cursor: pointer;
-}
-
-.lp-section-bottom {
+  }
+  
+  .lp-section-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.lp-comments-wrapper {
-    flex-grow: 1; /* This will make the comments take up all available space */
-    text-align: center; /* Center align the comments */
-}
-
-.lp-category {
+  }
+  
+  .lp-comments-wrapper {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .lp-category {
     padding-top: 2rem;
-    text-align: right; /* Right align the category name */
+    text-align: right;
     color: black;
     font-size: 14px;
-}
-
-.lp-div {
+  }
+  
+  .lp-div {
     align-self: center;
+  }
+  
+  .lp-comment-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .lp-comment-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+  }
+  
+  .lp-comment-list li strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .category-section .lp-article {
+    margin-bottom: 20px;
+  }
+  
+  /* Additional styles for better spacing and readability */
+  .add-comment {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .add-comment input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+  
+  .add-comment button {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .add-comment button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .post-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .post-card h2 {
+    font-size: 24px;
+    margin-top: 0;
+  }
+  
+  .post-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .post-card .content {
+    font-size: 16px;
+  }
+  
+  .post-card .created-by,
+  .post-card .created-date {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .post-card .actions {
+    margin-top: 15px;
+  }
+  
+  .post-card .actions button {
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .post-card .actions button.delete {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .post-card .actions button.edit {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .post-card .comments {
+    margin-top: 20px;
+  }
+  
+  .post-card .comments button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .post-card .comments-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .post-card .comments-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .post-card .comments-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .post-card .comments-list li .delete-comment {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    float: right;
+  }
+
+  /* Example CSS */
+.category-filter,
+.group-by-category {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
-.lp-comment-list {
-    list-style: none; /* Remove default list styling */
-    padding: 0; /* Remove any default padding */
+.category-filter {
+  justify-content: flex-end; /* Aligns to the right */
+  margin-right: 20px; /* Adds right margin */
 }
 
-.lp-comment-list li {
-    margin-bottom: 10px; /* Add some spacing between each comment */
-    padding: 10px; /* Add padding to each comment */
-    border: 1px solid #ccc; /* Add a border around each comment */
-    background-color: #f9f9f9; /* Set background color for comments */
+.group-by-category {
+  justify-content: flex-end; /* Aligns to the right */
+  margin-right: 20px; /* Adds right margin */
 }
 
-.lp-comment-list li strong {
-    font-weight: bold; /* Make author name bold */
-    margin-right: 5px; /* Add some spacing between author name and comment text */
+.category-filter label,
+.group-by-category label {
+  margin-right: 10px;
+  font-weight: bold;
 }
+
+.category-filter select,
+.group-by-category input[type="checkbox"] {
+  padding: 5px;
+  font-size: 16px;
+}
+
+  

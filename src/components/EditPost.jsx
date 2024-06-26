@@ -5,10 +5,17 @@ import { Button, Form, Input, Label } from "reactstrap";
 const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
+    const [imageName, setImageName] = useState(post.imageName);
   
     const handleUpdatePost = async (event) => {
       event.preventDefault();
       const token = localStorage.getItem("token");
+
+      const updatedPost = {
+        title,
+        content,
+        imageName,
+      };
   
       try {
         const response = await fetch(`http://localhost:8080/posts/${post.id}`, {
@@ -17,8 +24,9 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ title, content, imageName: post.imageName }),
+          body: JSON.stringify(updatedPost),
         });
+
   
         if (response.ok) {
           const updatedPost = await response.json();
@@ -35,7 +43,8 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
       // Reset title and content to original values from post object
       setTitle(post.title);
       setContent(post.content);
-  
+      setImageName(post.imageName);
+
       // Optionally, you can pass this callback to notify the parent component
       onCancelEdit();
     };
@@ -45,7 +54,7 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
         <div className="my-3">
           <Label for="title">Title</Label>
           <Input
-            type="text"
+            type="textarea"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -62,8 +71,24 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
             placeholder="Content"
           />
         </div>
+        <div className="my-3">
+                <Label for="imageName">Image URL</Label>
+                <Input
+                    type="textarea"
+                    id="imageName"
+                    value={imageName}
+                    onChange={(e) => setImageName(e.target.value)}
+                    placeholder="Image URL"
+                />
+                {imageName && (
+                    <div>
+                        <p>Current Image:</p>
+                        <img src={imageName} alt="Current Post Image" style={{ width: "100px", height: "auto" }} />
+                    </div>
+                )}
+            </div>
         <Button type="submit" color="primary">Update Post</Button>
-        <Button type="delete" onClick={handleCancelEdit}>Cancel</Button>
+        <Button type="delete" color="secondary" onClick={handleCancelEdit}>Cancel</Button>
       </Form>
     );
   };

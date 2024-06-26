@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/Dashboard.css";
 import PostCard from "../components/PostCard";
-import AddPost from "../components/AddPost";
 import EditPost from "../components/EditPost";
 
 
@@ -10,6 +9,10 @@ const Dashboard = () => {
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [postToEdit, setPostToEdit] = useState(null); // State to keep track of the post being edited
+  const [selectedCategory, setSelectedCategory] = useState(""); // State for selected category
+  const [categories, setCategories] = useState([]);
+  const [groupByCategory, setGroupByCategory] = useState(false); // State to control grouping by category
+
 
   useEffect(() => {
     const fetchUserFromLocalStorage = () => {
@@ -45,9 +48,15 @@ const Dashboard = () => {
 
       const responseData = await response.json();
       setPosts(responseData.content);
+      setCategories(getUniqueCategories(responseData.content)); // Extract unique categories
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const getUniqueCategories = (posts) => {
+    const allCategories = posts.flatMap(post => post.categories);
+    return [...new Set(allCategories)];
   };
 
   const handlePostAdded = (newPost) => {
@@ -84,25 +93,94 @@ const Dashboard = () => {
     setPostToEdit(null); // Clear the post being edited
   };
 
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const handleGroupByCategoryChange = (event) => {
+    setGroupByCategory(event.target.checked);
+  };
+
+  const groupPostsByCategory = (posts) => {
+    const groupedPosts = {};
+    posts.forEach((post) => {
+      post.categories.forEach((category) => {
+        if (!groupedPosts[category]) {
+          groupedPosts[category] = [];
+        }
+        groupedPosts[category].push(post);
+      });
+    });
+    return groupedPosts;
+  };
+
+  const filteredPosts = selectedCategory
+    ? posts.filter(post => post.categories.includes(selectedCategory))
+    : posts;
+
+  const groupedPosts = groupByCategory ? groupPostsByCategory(filteredPosts) : null;
+
   return (
     <main>
-      {isAdmin && <AddPost onPostAdded={handlePostAdded} user={user} />}
-      {postToEdit && (
+      {(
+        <div className="category-filter">
+          <label htmlFor="category-select">Filter by Category: </label>
+          <select
+            id="category-select"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="">All</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+      {isAdmin && (
+        <div className="group-by-category">
+          <label>
+            <input
+              type="checkbox"
+              checked={groupByCategory}
+              onChange={handleGroupByCategoryChange}
+            />
+            Group by Category (Admin)
+          </label>
+        </div>
+      )}
+{/*       {isAdmin && <AddPost onPostAdded={handlePostAdded} user={user} />} 
+ */}      {postToEdit && (
         <EditPost post={postToEdit} onPostUpdated={handlePostUpdated} onCancelEdit={handleCancelEdit}/>
       )}
-      {posts.map((post) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          onDeletePost={handleDeletePost}
-          onEditPost={handleEditPost}
-        />
-      ))}
+      {groupByCategory ? (
+        Object.keys(groupedPosts).map((category) => (
+          <section key={category} className="category-section">
+            <h2 className="category-title">{category}</h2>
+            {groupedPosts[category].map((post) => (
+              <PostCard
+                key={post.id}
+                post={post}
+                onDeletePost={handleDeletePost}
+                onEditPost={handleEditPost}
+              />
+            ))}
+          </section>
+        ))
+      ) : (
+        filteredPosts.map((post) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            onDeletePost={handleDeletePost}
+            onEditPost={handleEditPost}
+          />
+        ))
+      )}
     </main>
   );
 };
 
 export default Dashboard;
-
-
-

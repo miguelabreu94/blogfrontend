@@ -9,6 +9,7 @@ export const LoginPage = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,6 +22,8 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
 
     try {
       const response = await fetch("http://localhost:8080/auth/login", {
@@ -49,6 +52,8 @@ export const LoginPage = () => {
 
         navigate('/dashboard'); // Adjust the route as needed
         // Redirect user to dashboard or another page
+        window.location.reload(); // Reload the page
+
       } else {
         // Login failed
         alert(responseData.message);
@@ -56,6 +61,8 @@ export const LoginPage = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,9 +91,8 @@ export const LoginPage = () => {
         </label>
         <br />
         <div>
-          <Button className="login-button" outline type="submit">
-            {" "}
-            Login{" "}
+          <Button className="login-button" outline type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
           </Button>
         </div>
       </form>

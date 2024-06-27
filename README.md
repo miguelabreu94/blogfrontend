@@ -17,8 +17,8 @@ The Blog Application Frontend (Rumos) is a responsive and interactive client-sid
 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/blog-application-frontend-rumos.git
-cd blog-application-frontend-rumos
+git clone https://github.com/miguelabreu94/blogfrontend
+cd blogfrontend
 ```
 
 2. Install dependencies

@@ -105,6 +105,34 @@ const ProfilePage = () => {
     }
   };
 
+  const handleDemoteToUser = async (username) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/admin/demote/${username}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        alert(`User ${username} demoted to regular user successfully`);
+        // Refresh the user list after demotion
+        fetchUsersWithUserRole();
+      } else {
+        const responseData = await response.json();
+        alert(responseData.message || "Failed to demote user to regular user");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while demoting user to regular user");
+    }
+  };
+
+
   const toggleUserList = () => {
     setShowUserList(!showUserList);
     if (!showUserList) {
@@ -174,6 +202,12 @@ const ProfilePage = () => {
                               onClick={() => handlePromoteToAdmin(user.username)}
                             >
                               Promote to Admin
+                            </button>
+                            <button
+                              className="button-demote-user"
+                              onClick={() => handleDemoteToUser(user.username)}
+                            >
+                              Demote to User
                             </button>
                           </>
                         ) : (

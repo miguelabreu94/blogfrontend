@@ -91,6 +91,17 @@
   margin-left: 15px;
 }
 
+.button-demote-user{
+  background-color: #2748d9;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 15px;
+}
+
 .button-promote-admin:hover {
   background-color: #45a049;
 }

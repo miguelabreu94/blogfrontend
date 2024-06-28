@@ -6,6 +6,8 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
     const [imageName, setImageName] = useState(post.imageName);
+    const [slug, setSlug] = useState(post.slug); // State for slug
+
   
     const handleUpdatePost = async (event) => {
       event.preventDefault();
@@ -15,6 +17,7 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
         title,
         content,
         imageName,
+        slug,
       };
   
       try {

@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
+import PostPage from './pages/PostPage';
 import ProfilePage from "./pages/ProfilePage"
 import ProtectedRoute from "./components/ProtectedRoute"
 import AddPost from './components/AddPost';
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/profile" element={<ProtectedRoute element={ProfilePage} />} />
         <Route path="/add-post" element={<ProtectedRoute element={() => <AddPost user={user} />} />} />
         <Route path="/" element={<LoginPage />} />
+        <Route path="/post/:id/:slug" element={<PostPage />} /> {/* Updated Route */}
       </Routes>
     </Router>
   );

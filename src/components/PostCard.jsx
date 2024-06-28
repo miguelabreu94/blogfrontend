@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../css/PostCard.css"
 import EditPost from "./EditPost";
+import { Link } from 'react-router-dom';
+import { slugify } from '../components/utils';
 
 const PostCard = ({ post, onDeletePost, onEditPost }) => {
 
@@ -13,7 +15,8 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
     const [isMod, setIsMod] = useState(false); // State to handle moderator role
     const [userId, setUserId] = useState(null);
     const [editing, setEditing] = useState(false); // State to handle editing mode
-    
+    const slug = slugify(post.title);
+
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -157,6 +160,11 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
                 <>
             <section className="lp-section-header">
                 <h2>{post.title}</h2>
+                <Link to={`/post/${post.id}/${slug}`}>
+                <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
+                visibility
+                </span>
+                </Link>
             </section>
             <img className="lp-img" src={post.imageName} alt={post.title} />
             <div className="lp-content" dangerouslySetInnerHTML={{ __html: post.content }} />

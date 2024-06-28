@@ -124,7 +124,7 @@ const Dashboard = () => {
     <main>
       {(
         <div className="category-filter">
-          <label htmlFor="category-select">Filter by Category: </label>
+          <label className="category-filter-text" htmlFor="category-select">Filter by Category: </label>
           <select
             id="category-select"
             value={selectedCategory}
@@ -141,15 +141,15 @@ const Dashboard = () => {
       )}
       {isAdmin && (
         <div className="group-by-category">
-          <label>
-            <input
-              type="checkbox"
-              checked={groupByCategory}
-              onChange={handleGroupByCategoryChange}
-            />
-            Group by Category (Admin)
-          </label>
-        </div>
+        <label>
+        <span>Group by Category (Admin)</span>
+          <input
+            type="checkbox"
+            checked={groupByCategory}
+            onChange={handleGroupByCategoryChange}
+          />
+        </label>
+      </div>
       )}
 {/*       {isAdmin && <AddPost onPostAdded={handlePostAdded} user={user} />} 
  */}      {postToEdit && (

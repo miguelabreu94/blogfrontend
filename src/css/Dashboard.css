@@ -11,6 +11,69 @@
     width: 100%;
     margin-bottom: 30px;
   }
+
+  .category-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .category-filter-text {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #11b894f5; /* Text color */
+  }
+  
+  #category-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f7f7f7; /* Light gray background */
+    color: #0f8fda; /* Text color */
+    cursor: pointer;
+  }
+
+  .group-by-category {
+    margin-bottom: 10px;
+  }
+  
+  .group-by-category label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #e48c27cb; /* Text color */
+  }
+  
+  .group-by-category label span {
+    margin-right: 30px; /* Adjust the space between text and checkbox */
+  }
+  
+  .group-by-category label input[type="checkbox"] {
+    margin-right: 57px;
+    cursor: pointer;
+  }
+  
+  .group-by-category label input[type="checkbox"]:hover {
+    opacity: 0.8; /* Reduce opacity on hover */
+  }
+  
+  .group-by-category label input[type="checkbox"]:focus {
+    outline: none; /* Remove default focus outline */
+  }
+  
+  
+  
+  #category-select:hover {
+    border-color: #999; /* Darker border on hover */
+  }
+  
+  #category-select:focus {
+    outline: none;
+    border-color: #555;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
   
   .category-title {
     margin-top: 0;

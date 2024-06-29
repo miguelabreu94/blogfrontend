@@ -8,6 +8,11 @@
   margin-bottom: 8px;
 }
 
+.form-label {
+  margin-bottom: .5rem;
+  font-weight: bold;
+}
+
 .category-checkbox {
   margin-right: 8px;
 }
@@ -44,4 +49,27 @@
   text-align: center;
   font-size: 14px;
   color: #fff;
+}
+
+.datetime-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.datetime-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.datetime-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.datetime-container input:focus {
+  border-color: #007bff;
+  outline: none;
 }

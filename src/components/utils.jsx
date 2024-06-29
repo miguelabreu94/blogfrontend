@@ -3,6 +3,7 @@ export const logout = (navigate) => {
     localStorage.removeItem("role");
     localStorage.removeItem("user");
     navigate("/login");
+    alert("Sucessfully logged out")
   };
 
 export const slugify = (text) => {

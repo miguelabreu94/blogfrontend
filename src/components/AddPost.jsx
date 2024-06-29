@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardBody, Input, Form, Label, Button } from "reactstrap";
 import "../css/AddPost.css";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 
 
@@ -41,7 +43,7 @@ const AddPost = ({ user }) => {
 
     fetchCategories();
   }, []);
-  
+
     const submitPost = async () => {
       console.log("submitPost function called");
       const token = localStorage.getItem("token");
@@ -83,10 +85,9 @@ const AddPost = ({ user }) => {
         setImageUrl("");
         setscheduledDate("");
   
-        navigate('/dashboard'); // Adjust the route as needed
-  
       } catch (error) {
         console.error("Error:", error);
+        toast.error("Failed to schedule post");
       }
     };
 
@@ -101,10 +102,20 @@ const handlePostSubmit = (e) => {
 
   if (delay > 0) {
     console.log("Post will be submitted in:", delay, "ms");
-    setTimeout(submitPost, delay);
+    setTimeout(() => {
+      submitPost();
+    }, delay);
+    toast.success("Post successfully scheduled", {
+      autoClose: 1000, // Close after 1 seconds
+      onClose: () => navigate('/dashboard') // Redirect after showing toast
+    });
   } else {
     console.log("Post will be submitted immediately");
     submitPost();
+    toast.success("Post successfully created", {
+      autoClose: 1000, // Close after 1 seconds
+      onClose: () => navigate('/dashboard') // Redirect after showing toast
+    });
   }
 };
 
@@ -180,7 +191,7 @@ const handlePostSubmit = (e) => {
                 onChange={(e) => setImageUrl(e.target.value)}
               />
             </div>
-            <div className="my-3">
+            <div className="datetime-container my-3">
               <Label for="scheduledDate">Data e hora agendada</Label>
               <Input
                 type="datetime-local"
@@ -195,6 +206,7 @@ const handlePostSubmit = (e) => {
           </Form>
         </CardBody>
       </Card>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link, json, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "reactstrap"; // Import Button from reactstrap
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../css/LoginPage.css";
 
 export const LoginPage = () => {
@@ -47,16 +49,19 @@ export const LoginPage = () => {
         localStorage.setItem("user",JSON.stringify(responseData.user));
         console.log(responseData.token);
         console.log(responseData.role);
-        alert(responseData.message);
-        console.log(responseData.message);
-
-        navigate('/dashboard'); // Adjust the route as needed
-        // Redirect user to dashboard or another page
-        window.location.reload(); // Reload the page
+        toast.success("Login successfully", {
+          autoClose: 1000, // Close after 2 seconds
+          onClose: () => {
+            navigate('/dashboard'); 
+            setTimeout(() => {
+              window.location.reload();
+            }, 100); // Give a small delay to ensure navigation happens before reload
+          }
+        });
 
       } else {
         // Login failed
-        alert(responseData.message);
+        toast.error("Failed to login", { autoClose: 1000 });
         console.error(responseData.message);
       }
     } catch (error) {
@@ -102,6 +107,7 @@ export const LoginPage = () => {
           <Link to="/register">Register here</Link>
         </Button>
       </p>
+      <ToastContainer />
     </div>
   );
 };

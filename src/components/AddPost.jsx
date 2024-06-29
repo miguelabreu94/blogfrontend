@@ -10,6 +10,7 @@ const AddPost = ({ user }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [imageName, setImageUrl] = useState("");
+  const [scheduledDate, setscheduledDate] = useState('');
   const editor = useRef(null);
   const navigate = useNavigate();
 
@@ -40,61 +41,72 @@ const AddPost = ({ user }) => {
 
     fetchCategories();
   }, []);
-
-  const handlePostSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-
-    console.log(
-      "Adding post with userId:",
-      user.id,
-      "and categories:",
-      selectedCategories
-    );
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/admin/${user.id}/posts`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            title,
-            content,
-            imageName,
-            categories: selectedCategories,
-          }),
+  
+    const submitPost = async () => {
+      console.log("submitPost function called");
+      const token = localStorage.getItem("token");
+      try {
+        const response = await fetch(
+          `http://localhost:8080/admin/${user.id}/posts`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              title,
+              content,
+              imageName,
+              categories: selectedCategories,
+              scheduledDate,
+            }),
+          }
+        );
+  
+        console.log("POST Body:", {
+          title,
+          content,
+          imageName,
+          categories: selectedCategories,
+          scheduledDate,
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to create post");
         }
-      );
-
-      console.log("POST Body:", {
-        title,
-        content,
-        imageName,
-        categories: selectedCategories,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create post");
+  
+        const newPost = await response.json();
+        console.log("New post created:", newPost);
+        setTitle("");
+        setContent("");
+        setImageUrl("");
+        setscheduledDate("");
+  
+        navigate('/dashboard'); // Adjust the route as needed
+  
+      } catch (error) {
+        console.error("Error:", error);
       }
+    };
 
-      const newPost = await response.json();
-      console.log("New post created:", newPost);
-      setTitle("");
-      setContent("");
-      setImageUrl("");
+const handlePostSubmit = (e) => {
+  e.preventDefault();
+  console.log("handlePostSubmit function called");
+  const desiredDateTime = new Date(scheduledDate).getTime();
+  const currentTime = new Date().getTime();
+  const delay = desiredDateTime - currentTime;
 
-      navigate('/dashboard'); // Adjust the route as needed
+  console.log("Calculated delay:", delay);
 
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    
-  };
+  if (delay > 0) {
+    console.log("Post will be submitted in:", delay, "ms");
+    setTimeout(submitPost, delay);
+  } else {
+    console.log("Post will be submitted immediately");
+    submitPost();
+  }
+};
 
   const handleCheckboxChange = (e) => {
     const { value } = e.target;
@@ -166,6 +178,15 @@ const AddPost = ({ user }) => {
                 className="rounded-0"
                 value={imageName}
                 onChange={(e) => setImageUrl(e.target.value)}
+              />
+            </div>
+            <div className="my-3">
+              <Label for="scheduledDate">Data e hora agendada</Label>
+              <Input
+                type="datetime-local"
+                id="scheduledDate"
+                value={scheduledDate}
+                onChange={(e) => setscheduledDate(e.target.value)}
               />
             </div>
             <Button type="submit" color="primary">

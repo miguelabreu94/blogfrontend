@@ -9,6 +9,7 @@ import PostPage from './pages/PostPage';
 import ProfilePage from "./pages/ProfilePage"
 import ProtectedRoute from "./components/ProtectedRoute"
 import AddPost from './components/AddPost';
+import FavouritePosts from './pages/FavouritePosts';
 import "../src/css/global-styles.css"
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/add-post" element={<ProtectedRoute element={() => <AddPost user={user} />} />} />
         <Route path="/" element={<LoginPage />} />
         <Route path="/post/:id/:slug" element={<PostPage />} /> {/* Updated Route */}
+        <Route path="/favorite-posts" element={<FavouritePosts user = {user}/>} />
       </Routes>
     </Router>
   );

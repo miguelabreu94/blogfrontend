@@ -1,0 +1,35 @@
+.favorite-posts-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .sort-option {
+    margin-bottom: 20px;
+  }
+  
+  .sort-option label {
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+  
+  .sort-option input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  .sort-option input[type="checkbox"]:focus {
+    outline: none; /* Remove default focus outline */
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    justify-content: center;
+    display: flex;
+    font-weight: bold;
+    color: #333; /* Adjust color as needed */
+  }
+  

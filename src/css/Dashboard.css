@@ -17,6 +17,15 @@
     align-items: center;
     margin-bottom: 20px;
   }
+
+  .main-title{
+    font-size: 24px;
+    margin-bottom: 16px;
+    justify-content: center;
+    display: flex;
+    font-weight: bold;
+    color: #333; /* Adjust color as needed */
+  }
   
   .category-filter-text {
     font-weight: bold;
@@ -300,7 +309,7 @@
 
 .group-by-category {
   justify-content: flex-end; /* Aligns to the right */
-  margin-right: 20px; /* Adds right margin */
+  margin-right: 7px; /* Adds right margin */
 }
 
 .category-filter label,

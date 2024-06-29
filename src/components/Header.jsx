@@ -43,13 +43,11 @@ const Header = () => {
             <li>
               <Link to="/dashboard">Home</Link>
             </li>
-            <li>
-              <Link to="/profile">My profile</Link>
-            </li>
-
+            {user && <li><Link to="/profile">My Profile</Link></li>}                
               <li>
               {isAdmin && <Link to ="/add-post">Create Post</Link>} 
               </li> 
+              {user && <li><Link to="/favorite-posts">FavoritePosts</Link></li>}                
           </ul>
         </div>
         <div className="nav-right">

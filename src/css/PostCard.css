@@ -1,17 +1,104 @@
+body {
+  background: linear-gradient(135deg, #f1e5d3, #e3c9b0, #d1a48d);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
 .lp-article {
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 20px;
   padding: 20px;
-  max-width: 800px; 
-  width: 100%; 
-  margin-left: auto; 
-  margin-right: auto; 
+  max-width: 800px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden; /* Ensures content does not overflow */
 }
 
+.lp-post-title{
+  margin: 0;
+  font-size: 24px;
+  max-width: 70%; /* Ensures the title does not overflow the header */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds ellipsis if the title is too long */
+  white-space: nowrap; 
+}
+
+.lp-article p {
+  margin: 5px 0; /* Adjust this value as needed */
+}
+
+.lp-article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.lp-article h1, .lp-article h2, .lp-article h3, .lp-article h4, .lp-article h5, .lp-article h6 {
+  color: #444;
+  margin-top: 0;
+}
+
+.lp-article p {
+  margin-bottom: 20px;
+}
+
+.lp-article a {
+  color: #d18769;
+  text-decoration: none;
+}
+
+.lp-article a:hover {
+  text-decoration: underline;
+}
+
+.lp-article img {
+  max-width: 100%;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.lp-article blockquote {
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-style: italic;
+  color: #666;
+}
+
+.lp-article code {
+  background: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 90%;
+}
+
+
 .lp-section-header {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.lp-section-header h2 {
+  margin: 0;
+}
+
+.lp-section-actions {
+  display: flex;
+  align-items: center;
+}
+
+.lp-section-actions .material-symbols-outlined {
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 .heart-icon {
@@ -35,6 +122,16 @@
   align-items: center;
 }
 
+.favorite-section .heart-icon {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.favorite-section .favorite-count {
+  font-size: 14px;
+  color: #666;
+}
+
 
 .favorite-button {
   background: none;
@@ -54,21 +151,42 @@
   max-height: 300px;
   object-fit: cover;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin: 20px 0;
 }
 
 .lp-content {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  overflow-wrap: break-word; /* Ensures long words or links break to fit the container */
+}
+
+.lp-created-by, .lp-date-of-creation {
+  margin: 10px 0;
+  color: black;
+  font-size: 12px;
 }
 
 .lp-created-by {
-  color: black;
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.lp-date-of-creation{
+  font-size: 12px;
+}
+
+.lp-last-modified-date{
+  margin-bottom: 5px; /* Adjusted margin-bottom */
+}
+
+.lp-dates-box {
+  margin-bottom: 10px; /* Adjusted margin-bottom as needed */
+}
+
+.lp-dates-box p {
+  margin: 5px 0; /* Adjusted margin for individual paragraphs */
 }
 
 .lp-section-bottom {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .lp-comments-wrapper {
@@ -134,12 +252,11 @@
 }
 
 .lp-categories {
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .lp-categories-label {
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .lp-category-list {
@@ -154,7 +271,6 @@
   padding: 5px 10px;
   border-radius: 15px;
   margin-right: 5px;
-  margin-bottom: 5px;
 }
 
 .lp-edit-post-btn {
@@ -167,4 +283,8 @@
   margin-left: 10px;
 }
 
+.material-symbols-outlined{
+  display: flex;
+  justify-content: end;
+}
   

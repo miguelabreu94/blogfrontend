@@ -72,7 +72,9 @@ export const LoginPage = () => {
   };
 
   return (
+    
     <div className="login-container">
+      <p>WELCOME TO THIS AMAZING BLOG</p>
       <h2 className="login-title">Login</h2>
       <form onSubmit={handleSubmit}>
         <label>

@@ -145,6 +145,7 @@ const handlePostSubmit = (e) => {
                 className="rounded-0"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                maxLength={45}
               />
             </div>
             <div className="my-3">

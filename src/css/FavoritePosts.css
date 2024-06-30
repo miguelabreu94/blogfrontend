@@ -32,4 +32,18 @@
     font-weight: bold;
     color: #333; /* Adjust color as needed */
   }
+
+  .favorite-post-null {
+    color: #555; /* Neutral text color */
+    font-size: 18px; /* Slightly larger font size */
+    font-weight: 500; /* Semi-bold font weight */
+    text-align: center; /* Center the text */
+    margin: 20px 0; /* Space around the message */
+    padding: 10px 20px; /* Padding for extra space inside the element */
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
   

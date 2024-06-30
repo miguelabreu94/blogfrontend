@@ -22,7 +22,7 @@ const FavoritePostsPage = ({ user }) => {
                     const data = await response.json();
                     // Sort data if sortByFavorites is true
                     if (sortByFavorites) {
-                        data.sort((a, b) => b.favoriteCount - a.favoriteCount);
+                        data.sort((a, b) => a.favoriteCount - b.favoriteCount);
                     }
                     setFavoritePosts(data);
                 } else {
@@ -62,7 +62,7 @@ const FavoritePostsPage = ({ user }) => {
                 </label>
             </div>
             {favoritePosts.length === 0 ? (
-                <p>No favorite posts found.</p>
+                <p className='favorite-post-null'>No favorite posts found.</p>
             ) : (
                 <div className="favorite-posts-list">
                     {favoritePosts.map((post) => (

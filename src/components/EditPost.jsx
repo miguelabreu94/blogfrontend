@@ -62,6 +62,7 @@ const EditPost = ({ post, onPostUpdated, onCancelEdit  }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
+            maxLength={40}
           />
         </div>
         <div className="my-3">

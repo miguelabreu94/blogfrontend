@@ -236,7 +236,8 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
       ) : (
         <>
           <section className="lp-section-header">
-            <h2>{post.title}</h2>
+            <h2 className="lp-post-title">{post.title}</h2>
+            <div className="lp-section-actions">
             <Link to={`/post/${post.id}/${slug}`}>
               <span
                 className="material-symbols-outlined"
@@ -255,24 +256,25 @@ const PostCard = ({ post, onDeletePost, onEditPost }) => {
                 <span className="favorite-count">{favoriteCount}</span>
               </div>
             )}
+            </div>
           </section>
           <img className="lp-img" src={post.imageName} alt={post.title} />
           <div
             className="lp-content"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
+          <div className="lp-dates-box">
           <p className="lp-created-by">
             Criado por: ({post.user.pessoa.fullName}) {post.user.username}
           </p>
-
-          <p style={{ color: "black", fontSize: "12px" }}>
+          <p className="lp-date-of-creation" style={{ color: "black", fontSize: "12px" }}>
             Data de criação: {formattedDate}
           </p>
           {formattedLastModifiedDate && (
-            <p style={{ color: "black", fontSize: "12px" }}>
+            <p className="lp-date-of-modify"style={{ color: "black", fontSize: "12px" }}>
               Última modificação: {formattedLastModifiedDate}
             </p>
-          )}
+          )}</div>
 
           <section className="lp-section-bottom">
             <div className="lp-comments-wrapper">

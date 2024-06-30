@@ -30,7 +30,7 @@
   .category-filter-text {
     font-weight: bold;
     margin-right: 10px;
-    color: #11b894f5; /* Text color */
+    color: #343a40; /* Text color */
   }
   
   #category-select {
@@ -39,7 +39,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f7f7f7; /* Light gray background */
-    color: #0f8fda; /* Text color */
+    color: #343a40; /* Text color */
     cursor: pointer;
   }
 
@@ -51,7 +51,7 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: #e48c27cb; /* Text color */
+    color: #343a40; /* Text color */
   }
   
   .group-by-category label span {

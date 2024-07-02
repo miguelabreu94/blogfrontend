@@ -1,6 +1,6 @@
 # Blog Application Frontend (Rumos)
 
-The Blog Application Frontend (Rumos) is a responsive and interactive client-side application built with React. It serves as the user interface for the Blog Application, enabling users to browse, create, edit, and interact with blog content seamlessly. This project communicates with the backend application (built with Java and Spring Boot) via RESTful APIs.
+The Blog Application Frontend (Rumos) is a responsive and interactive client-side application built with React. It serves as the user interface for the Blog Application, enabling users to browse, create, edit, and interact with blog content seamlessly, providing different levels of access and functionality based on the user role. This project communicates with the backend application (built with Java and Spring Boot) via RESTful APIs. The application is styled with CSS and utilizes React Router for navigation.
 
 ---
 
@@ -13,6 +13,7 @@ The Blog Application Frontend (Rumos) is a responsive and interactive client-sid
 - Responsive Design: Optimized for both desktop and mobile devices.
 
 ## Setup and Installation
+### Option 1
 
 1. Clone the Repository
 
@@ -38,10 +39,40 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### Option 2
 
+1. Clone the repository.
+2. Ensure Docker and Docker Compose are installed on your machine.
+3. Open a terminal in the root directory of the project.
+4. Run the following command to build and start the containers defined in your docker-compose.yml
 
+```bash
+docker-compose up
+```
 
-4. Build for Production
+This command will automatically build the Docker image (if necessary) and start the container. Once the container is running, the application will be accessible through the browser at http://localhost:3000.
+
+To stop and remove the containers, use the command:
+
+```bash
+docker-compose down
+```
+
+## User Application Credentials
+
+| Role  | Username        | Password  |
+|-------|-----------------|-----------|
+| Admin | labreu          | password  |
+| User  | jabreu          | password  |
+
+## Tools and Libraries
+
+- React Router for navigation
+- JWT for authentication
+
+---
+
+Build for Production
 
 ```bash
 npm run build
@@ -53,7 +84,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-5. Testing
+Testing
 
 ```bash
 npm test
